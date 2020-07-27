@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.nexmoverify.region.RegionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_start_end"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="@dimen/margin_start_end"
+        tools:context=".ui.NexmoVerifyActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_first_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="107dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_prefix_container"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_prefix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/drop_down"
+                    android:drawablePadding="10dp"
+                    android:onClick="@{() -> viewModel.onRegionCodeClicked()}"
+                    android:padding="6dp"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/large_text_size"
+                    tools:text="+40" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_phone_number_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/txt_phone_number"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_phone_number"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:inputType="phone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/large_text_size"
+                android:text="@={viewModel.mutablePhoneNumber}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_enter_valid_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="107dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/txt_enter_valid_phone_number"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimary"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_first_container" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_verify_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button_background"
+            android:onClick="@{() -> viewModel.onVerifyPhoneNumberClicked()}"
+            android:text="@string/txt_verify_phone_number"
+            android:textColor="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_enter_valid_number" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

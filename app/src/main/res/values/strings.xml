@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Nexmo Verify</string>
+    <string name="txt_prefix">+%d</string>
+    <string name="txt_phone_number">Phone number</string>
+    <string name="txt_verify_phone_number">Verify phone number</string>
+    <string name="txt_enter_valid_phone_number">Enter a valid phone number</string>
+</resources>
