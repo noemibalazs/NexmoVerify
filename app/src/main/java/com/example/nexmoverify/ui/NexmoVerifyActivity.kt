@@ -94,7 +94,7 @@ class NexmoVerifyActivity : AppCompatActivity(), OTPListener {
             regionViewModel.setCountryPrefix(getPrefixWithoutPlusSign())
         })
 
-        regionViewModel.mutableFailedNumber.observe(this, Observer {
+        regionViewModel.onErrorFailedNumber.observe(this, Observer {
             showErrorToUser(it)
         })
     }

@@ -2,6 +2,7 @@ package com.example.nexmoverify.region
 
 import android.content.Context
 import android.telephony.TelephonyManager
+import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,11 +37,28 @@ class RegionViewModel(
     val onVerifyPhoneNumberClicked = SingleLiveData<Any>()
 
     val mutablePhoneNumber = ObservableField<String>()
-    val mutablePrefix = ObservableField<String>()
-    val mutableFailedNumber = SingleLiveData<Boolean>()
+    private val mutablePrefix = ObservableField<String>()
+    val onErrorFailedNumber = SingleLiveData<Boolean>()
+
+    val isValidPhoneNumber = ObservableField<Boolean>()
+    private var isValid = false
+
+    private val callback = object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            sender?.let {
+                when (sender) {
+                    mutablePhoneNumber -> {
+                        isValid = isValidPhoneNumber()
+                        isValidPhoneNumber.set(isValid)
+                    }
+                }
+            }
+        }
+    }
 
     init {
         loadRegions()
+        mutablePhoneNumber.addOnPropertyChangedCallback(callback)
     }
 
     private fun loadRegions() {
@@ -79,10 +97,11 @@ class RegionViewModel(
 
     fun onVerifyPhoneNumberClicked() {
         Logger.d(KOIN_TAG, "onVerifyPhoneNumberClicked")
-        if (isValidPhoneNumber()) {
+        if (isValidPhoneNumber.get() == true) {
             onVerifyPhoneNumberClicked.call()
+            onErrorFailedNumber.value = false
         } else
-            mutableFailedNumber.value = true
+            onErrorFailedNumber.value = true
     }
 
     private fun isValidPhoneNumber(): Boolean {
