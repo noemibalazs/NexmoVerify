@@ -158,7 +158,7 @@ class RegionViewModel(
                                 val textBeltVerifyResponse = response.body()
                                 textBeltVerifyResponse?.let {
                                     mutableSuccessListener.value = it.success
-                                    if (it.success)
+                                    if (it.success && it.otp.length == 6)
                                         dataManager.saveOTP(it.otp)
                                 }
                             }
