@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nexmoverify.R
-import com.example.nexmoverify.databinding.ActivityNexmoVerifyBinding
+import com.example.nexmoverify.databinding.ActivityGenerateCodeBinding
 import com.example.nexmoverify.helper.DataManager
 import com.example.nexmoverify.helper.OnItemClickListener
 import com.example.nexmoverify.helper.RecyclerItemClickListener
@@ -26,15 +26,16 @@ import com.example.nexmoverify.otp.SMSBroadcastReceiver
 import com.example.nexmoverify.region.Region
 import com.example.nexmoverify.region.RegionAdapter
 import com.example.nexmoverify.region.RegionViewModel
+import com.example.nexmoverify.util.openActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.orhanobut.logger.Logger
 import org.koin.android.ext.android.inject
 
-class NexmoVerifyActivity : AppCompatActivity(), OTPListener {
+class GenerateCodeActivity : AppCompatActivity(), OTPListener {
 
     private lateinit var smsReceiver: SMSBroadcastReceiver
-    private lateinit var binding: ActivityNexmoVerifyBinding
+    private lateinit var binding: ActivityGenerateCodeBinding
     private lateinit var regionAdapter: RegionAdapter
 
     private val appSignatureHelper: AppSignatureHelper by inject()
@@ -43,7 +44,7 @@ class NexmoVerifyActivity : AppCompatActivity(), OTPListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_nexmo_verify)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_generate_code)
 
         initListener()
         initPrefix()
@@ -96,6 +97,10 @@ class NexmoVerifyActivity : AppCompatActivity(), OTPListener {
 
         regionViewModel.onErrorFailedNumber.observe(this, Observer {
             showErrorToUser(it)
+        })
+
+        regionViewModel.mutableSuccessListener.observe(this, Observer {
+            openCheckCodeActivity(it)
         })
     }
 
@@ -159,9 +164,16 @@ class NexmoVerifyActivity : AppCompatActivity(), OTPListener {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    private fun getPrefixWithoutPlusSign(): String{
+    private fun getPrefixWithoutPlusSign(): String {
         val prefix = binding.tvPrefix.text
         return prefix.substring(1)
+    }
+
+    private fun openCheckCodeActivity(open: Boolean) {
+        if (open)
+            openActivity(CheckCodeActivity::class.java)
+        else
+            showToast(getString(R.string.txt_something_went_wrong))
     }
 
     override fun onDestroy() {

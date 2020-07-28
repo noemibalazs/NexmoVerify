@@ -6,15 +6,20 @@ import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.nexmoverify.R
 import com.example.nexmoverify.helper.DataManager
 import com.example.nexmoverify.helper.SingleLiveData
 import com.example.nexmoverify.nexmo.NexmoApiClient
 import com.example.nexmoverify.nexmo.NexmoVerifyBody
 import com.example.nexmoverify.nexmo.NexmoVerifyResponse
 import com.example.nexmoverify.otp.AppSignatureHelper
+import com.example.nexmoverify.textbelt.TextBeltApiClient
+import com.example.nexmoverify.textbelt.TextBeltVerifyBody
+import com.example.nexmoverify.textbelt.TextBeltVerifyResponse
 import com.example.nexmoverify.util.NEXMO_API_KEY
 import com.example.nexmoverify.util.NEXMO_BRAND
 import com.example.nexmoverify.util.NEXMO_SECRET_KEY
+import com.example.nexmoverify.util.TEXT_BELT_KEY
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.*
@@ -29,7 +34,7 @@ class RegionViewModel(
     private val regionManager: RegionManager,
     private val dataManager: DataManager,
     private val context: Context,
-    private val nexmoApiClient: NexmoApiClient
+    private val textBeltApiClient: TextBeltApiClient
 ) : ViewModel() {
 
     val mutableRegionList = MutableLiveData<List<Region>>()
@@ -42,6 +47,8 @@ class RegionViewModel(
 
     val isValidPhoneNumber = ObservableField<Boolean>()
     private var isValid = false
+
+    val mutableSuccessListener = SingleLiveData<Boolean>()
 
     private val callback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -127,24 +134,26 @@ class RegionViewModel(
 
     private fun getVerificationCode() {
         CoroutineScope(Dispatchers.IO).launch {
-            val number = "${mutablePrefix.get()!!}${mutablePhoneNumber.get()!!}"
-            val verifyBody = NexmoVerifyBody(
-                api_key = NEXMO_API_KEY,
-                api_secret = NEXMO_SECRET_KEY,
-                brand = NEXMO_BRAND,
-                number = number
+            val number = context.getString(
+                R.string.txt_phone_number_format,
+                mutablePrefix.get()!!,
+                mutablePhoneNumber.get()!!
             )
-            val result = nexmoApiClient.verificationCode(verifyBody)
+            val textBeltVerifyBody = TextBeltVerifyBody(
+                key = TEXT_BELT_KEY, userid = appSignatureHelper.getAppSignature()[0], message =
+                context.getString(R.string.txt_text_belt_message), phone = number
+            )
+            val result = textBeltApiClient.generateOTP(textBeltVerifyBody)
             withContext(Dispatchers.Main) {
                 try {
-                    result.enqueue(object : Callback<NexmoVerifyResponse> {
-                        override fun onFailure(call: Call<NexmoVerifyResponse>, t: Throwable) {
+                    result.enqueue(object : Callback<TextBeltVerifyResponse> {
+                        override fun onFailure(call: Call<TextBeltVerifyResponse>, t: Throwable) {
                             Logger.e(KOIN_TAG, "onFailure error: ${t.message}")
                         }
 
                         override fun onResponse(
-                            call: Call<NexmoVerifyResponse>,
-                            response: Response<NexmoVerifyResponse>
+                            call: Call<TextBeltVerifyResponse>,
+                            response: Response<TextBeltVerifyResponse>
                         ) {
                             if (!response.isSuccessful) {
                                 Logger.d(KOIN_TAG, "onResponse failure: ${response.errorBody()}")
@@ -152,9 +161,11 @@ class RegionViewModel(
 
                             if (response.isSuccessful) {
                                 Logger.d(KOIN_TAG, "onResponse is success, launch check code")
-                                val nexmoVerifyResponse = response.body()
-                                nexmoVerifyResponse?.let {
-                                    dataManager.saveNexmoRequestId(it.request_id)
+                                val textBeltVerifyResponse = response.body()
+                                textBeltVerifyResponse?.let {
+                                    mutableSuccessListener.value = it.success
+                                    if (it.success)
+                                        dataManager.saveOTP(it.otp)
                                 }
                             }
                         }

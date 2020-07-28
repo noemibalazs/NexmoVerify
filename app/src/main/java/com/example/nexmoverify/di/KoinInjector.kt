@@ -12,6 +12,7 @@ class KoinInjector {
             fun getRegionManagerModule() = listOf(regionManagerModule)
             fun getRegionViewModelModule() = listOf(regionViewModelModule)
             fun getNexmoModule() = listOf(nexmoModule)
+            fun getTextBeltModule() = listOf(textBeltModule)
 
             return mutableListOf<Module>().apply {
                 addAll(getAppSignatureModule())
@@ -19,6 +20,7 @@ class KoinInjector {
                 addAll(getRegionManagerModule())
                 addAll(getRegionViewModelModule())
                 addAll(getNexmoModule())
+                addAll(getTextBeltModule())
             }
         }
     }

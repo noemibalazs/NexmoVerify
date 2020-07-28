@@ -1,10 +1,7 @@
 package com.example.nexmoverify.helper
 
 import android.content.Context
-import com.example.nexmoverify.util.MY_PREF
-import com.example.nexmoverify.util.NEXMO_REGUEST_ID_KEY
-import com.example.nexmoverify.util.REGION_COUNTRY_CODE_KEY
-import com.example.nexmoverify.util.REGION_COUNTRY_KEY
+import com.example.nexmoverify.util.*
 
 class DataManager(private val context: Context) {
 
@@ -32,5 +29,13 @@ class DataManager(private val context: Context) {
 
     fun getNexmoRequestID(): String {
         return sharedPreferences.getString(NEXMO_REGUEST_ID_KEY, "") ?: ""
+    }
+
+    fun saveOTP(otp: String){
+        sharedPreferences.edit().putString(TEXT_BELT_OTP_KEY, otp).apply()
+    }
+
+    fun getOTP():String{
+        return sharedPreferences.getString(TEXT_BELT_OTP_KEY, "") ?: ""
     }
 }

@@ -5,6 +5,7 @@ import com.example.nexmoverify.nexmo.NexmoApiClient
 import com.example.nexmoverify.otp.AppSignatureHelper
 import com.example.nexmoverify.region.RegionManager
 import com.example.nexmoverify.region.RegionViewModel
+import com.example.nexmoverify.textbelt.TextBeltApiClient
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -30,11 +31,15 @@ val regionViewModelModule = module {
             regionManager = get(),
             dataManager = get(),
             context = androidApplication().applicationContext,
-            nexmoApiClient = get()
+            textBeltApiClient = get()
         )
     }
 }
 
 val nexmoModule = module {
     single { NexmoApiClient.getNexmoApiClient() }
+}
+
+val textBeltModule = module {
+    single { TextBeltApiClient.getTextBeltApiClient() }
 }
