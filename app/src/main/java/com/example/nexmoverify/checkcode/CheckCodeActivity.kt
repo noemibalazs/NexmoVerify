@@ -1,4 +1,4 @@
-package com.example.nexmoverify.ui
+package com.example.nexmoverify.checkcode
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

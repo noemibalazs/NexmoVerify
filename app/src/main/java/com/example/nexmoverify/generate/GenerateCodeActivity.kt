@@ -1,4 +1,4 @@
-package com.example.nexmoverify.ui
+package com.example.nexmoverify.generate
 
 import android.content.Context
 import android.content.IntentFilter
@@ -26,6 +26,7 @@ import com.example.nexmoverify.otp.SMSBroadcastReceiver
 import com.example.nexmoverify.region.Region
 import com.example.nexmoverify.region.RegionAdapter
 import com.example.nexmoverify.region.RegionViewModel
+import com.example.nexmoverify.checkcode.CheckCodeActivity
 import com.example.nexmoverify.util.openActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.i18n.phonenumbers.PhoneNumberUtil

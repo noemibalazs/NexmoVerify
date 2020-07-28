@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.CheckCodeActivity"></activity>
-        <activity android:name=".ui.GenerateCodeActivity">
+        <activity android:name=".checkcode.CheckCodeActivity"></activity>
+        <activity android:name=".generate.GenerateCodeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

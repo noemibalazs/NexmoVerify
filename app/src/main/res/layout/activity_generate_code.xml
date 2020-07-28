@@ -16,7 +16,7 @@
         android:layout_marginStart="@dimen/margin_start_end"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="@dimen/margin_start_end"
-        tools:context=".ui.GenerateCodeActivity">
+        tools:context=".generate.GenerateCodeActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_first_container"
