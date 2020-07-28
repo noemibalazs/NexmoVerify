@@ -9,16 +9,10 @@ import androidx.lifecycle.ViewModel
 import com.example.nexmoverify.R
 import com.example.nexmoverify.helper.DataManager
 import com.example.nexmoverify.helper.SingleLiveData
-import com.example.nexmoverify.nexmo.NexmoApiClient
-import com.example.nexmoverify.nexmo.NexmoVerifyBody
-import com.example.nexmoverify.nexmo.NexmoVerifyResponse
 import com.example.nexmoverify.otp.AppSignatureHelper
 import com.example.nexmoverify.textbelt.TextBeltApiClient
 import com.example.nexmoverify.textbelt.TextBeltVerifyBody
 import com.example.nexmoverify.textbelt.TextBeltVerifyResponse
-import com.example.nexmoverify.util.NEXMO_API_KEY
-import com.example.nexmoverify.util.NEXMO_BRAND
-import com.example.nexmoverify.util.NEXMO_SECRET_KEY
 import com.example.nexmoverify.util.TEXT_BELT_KEY
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.orhanobut.logger.Logger
