@@ -13,14 +13,14 @@ import retrofit2.http.GET
 interface NexmoApiClient {
 
     @GET("json")
-    fun verificationCode(@Body body: NexmoVerifyBody): Call<NexmoVerifyResponse>
+    fun generateCode(@Body body: NexmoVerifyBody): Call<NexmoVerifyResponse>
 
     @GET("check/json")
     fun checkVerificationCode(@Body body: NexmoCheckBody): Call<NexmoCheckResponse>
 
     companion object {
-        val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
-        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        private val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+        private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
         fun getNexmoApiClient(): NexmoApiClient {
             return Retrofit.Builder()
                 .baseUrl(NEXMO_BASE_URL)
