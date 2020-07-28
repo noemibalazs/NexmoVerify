@@ -27,6 +27,7 @@ interface NexmoApiClient {
         @Query("request_id") request_id: String,
         @Query("code") code: Int
     ): Call<NexmoCheckResponse>
+
     companion object {
         private val interceptor = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
