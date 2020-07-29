@@ -1,4 +1,4 @@
-package com.example.nexmoverify.generate
+package com.example.nexmoverify.generatecode
 
 import android.content.Context
 import android.telephony.TelephonyManager
@@ -140,6 +140,7 @@ class GenerateCodeViewModel(
                 key = TEXT_BELT_KEY, userid = appSignatureHelper.getAppSignature()[0], message =
                 context.getString(R.string.txt_text_belt_message), phone = number
             )
+            dataManager.saveUserPhoneNumber(number)
             val result = textBeltApiClient.generateOTP(textBeltVerifyBody)
             withContext(Dispatchers.Main) {
                 try {

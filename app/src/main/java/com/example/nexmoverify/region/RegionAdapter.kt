@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.nexmoverify.R
 import com.example.nexmoverify.databinding.ItemRegionBinding
-import com.example.nexmoverify.generate.GenerateCodeViewModel
+import com.example.nexmoverify.generatecode.GenerateCodeViewModel
 import com.example.nexmoverify.helper.DataManager
 
 class RegionAdapter(

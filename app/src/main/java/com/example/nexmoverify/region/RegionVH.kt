@@ -2,7 +2,7 @@ package com.example.nexmoverify.region
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nexmoverify.databinding.ItemRegionBinding
-import com.example.nexmoverify.generate.GenerateCodeViewModel
+import com.example.nexmoverify.generatecode.GenerateCodeViewModel
 
 class RegionVH(
     private val binding: ItemRegionBinding,

@@ -31,11 +31,19 @@ class DataManager(private val context: Context) {
         return sharedPreferences.getString(NEXMO_REGUEST_ID_KEY, "") ?: ""
     }
 
-    fun saveOTP(otp: String){
+    fun saveOTP(otp: String) {
         sharedPreferences.edit().putString(TEXT_BELT_OTP_KEY, otp).apply()
     }
 
-    fun getOTP():String{
+    fun getOTP(): String {
         return sharedPreferences.getString(TEXT_BELT_OTP_KEY, "") ?: ""
+    }
+
+    fun saveUserPhoneNumber(number: String) {
+        sharedPreferences.edit().putString(USER_PHONE_NUMBER_KEY, number).apply()
+    }
+
+    fun getUserPhoneNumber(): String {
+        return sharedPreferences.getString(USER_PHONE_NUMBER_KEY, "") ?: ""
     }
 }

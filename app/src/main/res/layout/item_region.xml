@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.nexmoverify.generate.GenerateCodeViewModel" />
+            type="com.example.nexmoverify.generatecode.GenerateCodeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

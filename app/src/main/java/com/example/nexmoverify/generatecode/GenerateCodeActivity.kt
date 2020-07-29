@@ -1,4 +1,4 @@
-package com.example.nexmoverify.generate
+package com.example.nexmoverify.generatecode
 
 import android.content.Context
 import android.content.IntentFilter

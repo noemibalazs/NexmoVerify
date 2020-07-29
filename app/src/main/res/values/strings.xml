@@ -10,4 +10,6 @@
     <string name="txt_enter_digit_code">Enter the 6-digit code that we sent to</string>
     <string name="txt_continue">Continue</string>
     <string name="txt_wrong_code">Wrong code.Try again.</string>
+    <string name="txt_user_phone_number">+%s</string>
+    <string name="txt_phone_number_automatically_verified">Phone number automatically verified</string>
 </resources>
