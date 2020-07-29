@@ -26,7 +26,6 @@ import com.example.nexmoverify.otp.OTPListener
 import com.example.nexmoverify.otp.SMSBroadcastReceiver
 import com.example.nexmoverify.region.Region
 import com.example.nexmoverify.region.RegionAdapter
-import com.example.nexmoverify.region.RegionViewModel
 import com.example.nexmoverify.checkcode.CheckCodeActivity
 import com.example.nexmoverify.util.openActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -42,7 +41,7 @@ class GenerateCodeActivity : AppCompatActivity(), OTPListener {
     private lateinit var regionAdapter: RegionAdapter
 
     private val appSignatureHelper: AppSignatureHelper by inject()
-    private val regionViewModel: RegionViewModel by inject()
+    private val generateCodeViewModel: GenerateCodeViewModel by inject()
     private val dataManager: DataManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,33 +80,33 @@ class GenerateCodeActivity : AppCompatActivity(), OTPListener {
     }
 
     private fun initBinding() {
-        binding.viewModel = regionViewModel
-        regionAdapter = RegionAdapter(regionViewModel, dataManager)
+        binding.viewModel = generateCodeViewModel
+        regionAdapter = RegionAdapter(generateCodeViewModel, dataManager)
     }
 
     private fun initObservers() {
-        regionViewModel.mutableRegionList.observe(this, Observer {
+        generateCodeViewModel.mutableRegionList.observe(this, Observer {
             regionAdapter.submitList(it)
         })
 
-        regionViewModel.onCountryCodeClicked.observe(this, Observer {
+        generateCodeViewModel.onCountryCodeClicked.observe(this, Observer {
             showAllCountryToUser()
         })
 
-        regionViewModel.onVerifyPhoneNumberClicked.observe(this, Observer {
-            regionViewModel.setCountryPrefix(getPrefixWithoutPlusSign())
-            regionViewModel.generateVerificationCode()
+        generateCodeViewModel.onVerifyPhoneNumberClicked.observe(this, Observer {
+            generateCodeViewModel.setCountryPrefix(getPrefixWithoutPlusSign())
+            generateCodeViewModel.generateVerificationCode()
         })
 
-        regionViewModel.errorVerifyNumber.observe(this, Observer {
+        generateCodeViewModel.errorVerifyNumber.observe(this, Observer {
             showInvalidPhoneNumberErrorToUser(it)
         })
 
-        regionViewModel.generateCodeSuccessListener.observe(this, Observer {
+        generateCodeViewModel.generateCodeSuccessListener.observe(this, Observer {
             openCheckCodeActivity(it)
         })
 
-        regionViewModel.generateCodeErrorListener.observe(this, Observer {
+        generateCodeViewModel.generateCodeErrorListener.observe(this, Observer {
             showGenerateCodeErrorToUser()
         })
     }
@@ -178,9 +177,10 @@ class GenerateCodeActivity : AppCompatActivity(), OTPListener {
     }
 
     private fun openCheckCodeActivity(open: Boolean) {
-        if (open)
+        if (open) {
             openActivity(CheckCodeActivity::class.java)
-        else
+            finish()
+        } else
             showGenerateCodeErrorToUser()
     }
 

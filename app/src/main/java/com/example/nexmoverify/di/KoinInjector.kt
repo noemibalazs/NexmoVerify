@@ -10,17 +10,19 @@ class KoinInjector {
             fun getAppSignatureModule() = listOf(appSignatureModule)
             fun getDataManagerModule() = listOf(dataManagerModule)
             fun getRegionManagerModule() = listOf(regionManagerModule)
-            fun getRegionViewModelModule() = listOf(regionViewModelModule)
+            fun getGenerateCodeViewModelModule() = listOf(generateCodeViewModelModule)
             fun getNexmoModule() = listOf(nexmoModule)
             fun getTextBeltModule() = listOf(textBeltModule)
+            fun getCheckCodeViewModelModule() = listOf(checkCodeViewModelModule)
 
             return mutableListOf<Module>().apply {
                 addAll(getAppSignatureModule())
                 addAll(getDataManagerModule())
                 addAll(getRegionManagerModule())
-                addAll(getRegionViewModelModule())
+                addAll(getGenerateCodeViewModelModule())
                 addAll(getNexmoModule())
                 addAll(getTextBeltModule())
+                addAll(getCheckCodeViewModelModule())
             }
         }
     }

@@ -1,9 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".checkcode.CheckCodeActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.nexmoverify.checkcode.CheckCodeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_start_end"
+        tools:context=".checkcode.CheckCodeActivity">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_enter_digit_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_enter_digit_code"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/middle_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/middle_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_enter_digit_code"
+            tools:text="+40770152804" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_digit_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_phone_number">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_first_digit"
+                style="@style/CustomEditText"
+                app:layout_constraintEnd_toStartOf="@+id/et_second_digit"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="3" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_second_digit"
+                style="@style/CustomEditText"
+                app:layout_constraintEnd_toStartOf="@+id/et_third_digit"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/et_first_digit"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="6" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_third_digit"
+                style="@style/CustomEditText"
+                app:layout_constraintEnd_toStartOf="@+id/et_forth_digit"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/et_second_digit"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="9" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_forth_digit"
+                style="@style/CustomEditText"
+                app:layout_constraintEnd_toStartOf="@+id/et_fifth_digit"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/et_third_digit"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="9" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_fifth_digit"
+                style="@style/CustomEditText"
+                app:layout_constraintEnd_toStartOf="@+id/et_sixth_digit"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/et_forth_digit"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="6" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_sixth_digit"
+                style="@style/CustomEditText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/et_fifth_digit"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_wrong_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_wrong_code"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_digit_code" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_continue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/continue_background"
+            android:text="@string/txt_continue"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_wrong_code" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

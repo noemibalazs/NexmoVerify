@@ -6,10 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.nexmoverify.R
 import com.example.nexmoverify.databinding.ItemRegionBinding
+import com.example.nexmoverify.generate.GenerateCodeViewModel
 import com.example.nexmoverify.helper.DataManager
 
 class RegionAdapter(
-    private val regionViewModel: RegionViewModel,
+    private val generateCodeViewModel: GenerateCodeViewModel,
     private val dataManager: DataManager
 ) : ListAdapter<Region, RegionVH>(RegionDifUtil()) {
 
@@ -21,7 +22,7 @@ class RegionAdapter(
                 parent,
                 false
             )
-        return RegionVH(binding, regionViewModel)
+        return RegionVH(binding, generateCodeViewModel)
     }
 
     override fun onBindViewHolder(holder: RegionVH, position: Int) {

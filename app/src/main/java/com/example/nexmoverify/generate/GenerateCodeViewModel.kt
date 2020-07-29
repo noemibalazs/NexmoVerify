@@ -1,4 +1,4 @@
-package com.example.nexmoverify.region
+package com.example.nexmoverify.generate
 
 import android.content.Context
 import android.telephony.TelephonyManager
@@ -10,6 +10,8 @@ import com.example.nexmoverify.R
 import com.example.nexmoverify.helper.DataManager
 import com.example.nexmoverify.helper.SingleLiveData
 import com.example.nexmoverify.otp.AppSignatureHelper
+import com.example.nexmoverify.region.Region
+import com.example.nexmoverify.region.RegionManager
 import com.example.nexmoverify.textbelt.TextBeltApiClient
 import com.example.nexmoverify.textbelt.TextBeltVerifyBody
 import com.example.nexmoverify.textbelt.TextBeltVerifyResponse
@@ -23,7 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class RegionViewModel(
+class GenerateCodeViewModel(
     private val appSignatureHelper: AppSignatureHelper,
     private val regionManager: RegionManager,
     private val dataManager: DataManager,

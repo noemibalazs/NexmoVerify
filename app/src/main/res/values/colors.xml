@@ -7,4 +7,8 @@
     <color name="grey">#bfbfbf</color>
     <color name="custom">#b30000</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="red_basic">#f44336</color>
+    <color name="red_middle">#d32f2f</color>
+    <color name="red_dark">#b71c1c</color>
 </resources>
