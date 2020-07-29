@@ -51,6 +51,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_first_digit"
                 style="@style/CustomEditText"
+                android:text="@={viewModel.mutableFirstDigit}"
                 app:layout_constraintEnd_toStartOf="@+id/et_second_digit"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,6 +61,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_second_digit"
                 style="@style/CustomEditText"
+                android:text="@={viewModel.mutableSecondDigit}"
                 app:layout_constraintEnd_toStartOf="@+id/et_third_digit"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/et_first_digit"
@@ -69,6 +71,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_third_digit"
                 style="@style/CustomEditText"
+                android:text="@={viewModel.mutableThirdDigit}"
                 app:layout_constraintEnd_toStartOf="@+id/et_forth_digit"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/et_second_digit"
@@ -78,6 +81,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_forth_digit"
                 style="@style/CustomEditText"
+                android:text="@={viewModel.mutableForthDigit}"
                 app:layout_constraintEnd_toStartOf="@+id/et_fifth_digit"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/et_third_digit"
@@ -87,6 +91,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_fifth_digit"
                 style="@style/CustomEditText"
+                android:text="@={viewModel.mutableFifthDigit}"
                 app:layout_constraintEnd_toStartOf="@+id/et_sixth_digit"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/et_forth_digit"
@@ -96,6 +101,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_sixth_digit"
                 style="@style/CustomEditText"
+                android:text="@={viewModel.mutableSixthDigit}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/et_fifth_digit"
@@ -122,6 +128,7 @@
             android:background="@drawable/continue_background"
             android:text="@string/txt_continue"
             android:textColor="@color/white"
+            android:onClick="@{() -> viewModel.onContinueClicked()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_wrong_code" />

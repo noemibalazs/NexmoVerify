@@ -1,5 +1,7 @@
 package com.example.nexmoverify.checkcode
 
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.example.nexmoverify.helper.DataManager
 import com.example.nexmoverify.helper.SingleLiveData
@@ -25,6 +27,23 @@ class CheckCodeViewModel(
     }
 
     val mutableIsValidOTP = SingleLiveData<Boolean>()
+
+    val mutableFirstDigit = ObservableField<String>()
+    val mutableSecondDigit = ObservableField<String>()
+    val mutableThirdDigit = ObservableField<String>()
+    val mutableForthDigit = ObservableField<String>()
+    val mutableFifthDigit = ObservableField<String>()
+    val mutableSixthDigit = ObservableField<String>()
+
+    val allDigitsAreIntroduced = SingleLiveData<Boolean>()
+
+    private val callback = object : Observable.OnPropertyChangedCallback() {
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            sender?.let {
+
+            }
+        }
+    }
 
     private fun checkGeneratedCode() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -66,5 +85,9 @@ class CheckCodeViewModel(
                 }
             }
         }
+    }
+
+    fun onContinueClicked() {
+        Logger.d(KOIN_TAG, "onContinueClicked")
     }
 }
