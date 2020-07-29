@@ -8,6 +8,7 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -29,6 +30,7 @@ import com.example.nexmoverify.region.RegionViewModel
 import com.example.nexmoverify.checkcode.CheckCodeActivity
 import com.example.nexmoverify.util.openActivity
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.android.material.snackbar.Snackbar
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.orhanobut.logger.Logger
 import org.koin.android.ext.android.inject
@@ -94,14 +96,19 @@ class GenerateCodeActivity : AppCompatActivity(), OTPListener {
 
         regionViewModel.onVerifyPhoneNumberClicked.observe(this, Observer {
             regionViewModel.setCountryPrefix(getPrefixWithoutPlusSign())
+            regionViewModel.generateVerificationCode()
         })
 
-        regionViewModel.onErrorFailedNumber.observe(this, Observer {
-            showErrorToUser(it)
+        regionViewModel.errorVerifyNumber.observe(this, Observer {
+            showInvalidPhoneNumberErrorToUser(it)
         })
 
-        regionViewModel.mutableSuccessListener.observe(this, Observer {
+        regionViewModel.generateCodeSuccessListener.observe(this, Observer {
             openCheckCodeActivity(it)
+        })
+
+        regionViewModel.generateCodeErrorListener.observe(this, Observer {
+            showGenerateCodeErrorToUser()
         })
     }
 
@@ -130,7 +137,7 @@ class GenerateCodeActivity : AppCompatActivity(), OTPListener {
         binding.tvPrefix.text = getString(R.string.txt_prefix, region.countryCode)
     }
 
-    private fun showErrorToUser(error: Boolean) {
+    private fun showInvalidPhoneNumberErrorToUser(error: Boolean) {
         binding.tvEnterValidNumber.isVisible = error
         if (error)
             binding.tvPhoneNumberText.setTextColor(
@@ -174,7 +181,20 @@ class GenerateCodeActivity : AppCompatActivity(), OTPListener {
         if (open)
             openActivity(CheckCodeActivity::class.java)
         else
-            showToast(getString(R.string.txt_something_went_wrong))
+            showGenerateCodeErrorToUser()
+    }
+
+    private fun showGenerateCodeErrorToUser() {
+        val snackBar = Snackbar.make(
+            this.findViewById(android.R.id.content),
+            R.string.txt_something_went_wrong,
+            Snackbar.LENGTH_LONG
+        )
+        val view = snackBar.view
+        view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        val text = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        text.setTextColor(ContextCompat.getColor(this, R.color.white))
+        snackBar.show()
     }
 
     override fun onDestroy() {

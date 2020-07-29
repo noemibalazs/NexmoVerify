@@ -4,7 +4,7 @@
     <string name="txt_phone_number">Phone number</string>
     <string name="txt_verify_phone_number">Verify phone number</string>
     <string name="txt_enter_valid_phone_number">Enter a valid phone number</string>
-    <string name="txt_text_belt_message">$OTP is your verification code for SOS -Guardian App.</string>
+    <string name="txt_text_belt_message">$OTP is your verification code for SOS - Guardian App.</string>
     <string name="txt_phone_number_format">%s%s</string>
-    <string name="txt_something_went_wrong">Something went wrong, try it again!</string>
+    <string name="txt_something_went_wrong">Oops, something went wrong, try it again!</string>
 </resources>

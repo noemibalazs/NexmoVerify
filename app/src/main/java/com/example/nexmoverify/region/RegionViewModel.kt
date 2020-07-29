@@ -37,12 +37,13 @@ class RegionViewModel(
 
     val mutablePhoneNumber = ObservableField<String>()
     private val mutablePrefix = ObservableField<String>()
-    val onErrorFailedNumber = SingleLiveData<Boolean>()
+    val errorVerifyNumber = SingleLiveData<Boolean>()
 
     val isValidPhoneNumber = ObservableField<Boolean>()
     private var isValid = false
 
-    val mutableSuccessListener = SingleLiveData<Boolean>()
+    val generateCodeSuccessListener = SingleLiveData<Boolean>()
+    val generateCodeErrorListener = SingleLiveData<Any>()
 
     private val callback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -100,9 +101,9 @@ class RegionViewModel(
         Logger.d(KOIN_TAG, "onVerifyPhoneNumberClicked")
         if (isValidPhoneNumber.get() == true) {
             onVerifyPhoneNumberClicked.call()
-            onErrorFailedNumber.value = false
+            errorVerifyNumber.value = false
         } else
-            onErrorFailedNumber.value = true
+            errorVerifyNumber.value = true
     }
 
     private fun isValidPhoneNumber(): Boolean {
@@ -126,7 +127,7 @@ class RegionViewModel(
         return false
     }
 
-    private fun getVerificationCode() {
+    fun generateVerificationCode() {
         CoroutineScope(Dispatchers.IO).launch {
             val number = context.getString(
                 R.string.txt_phone_number_format,
@@ -143,6 +144,7 @@ class RegionViewModel(
                     result.enqueue(object : Callback<TextBeltVerifyResponse> {
                         override fun onFailure(call: Call<TextBeltVerifyResponse>, t: Throwable) {
                             Logger.e(KOIN_TAG, "onFailure error: ${t.message}")
+                            generateCodeErrorListener.call()
                         }
 
                         override fun onResponse(
@@ -151,13 +153,14 @@ class RegionViewModel(
                         ) {
                             if (!response.isSuccessful) {
                                 Logger.d(KOIN_TAG, "onResponse failure: ${response.errorBody()}")
+                                generateCodeErrorListener.call()
                             }
 
                             if (response.isSuccessful) {
                                 Logger.d(KOIN_TAG, "onResponse is success, launch check code")
                                 val textBeltVerifyResponse = response.body()
                                 textBeltVerifyResponse?.let {
-                                    mutableSuccessListener.value = it.success
+                                    generateCodeSuccessListener.value = it.success
                                     if (it.success && it.otp.length == 6)
                                         dataManager.saveOTP(it.otp)
                                 }
