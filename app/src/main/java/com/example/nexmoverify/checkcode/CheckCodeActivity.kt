@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -47,21 +48,25 @@ class CheckCodeActivity : AppCompatActivity() {
         checkCodeViewModel.allDigitsAreIntroduced.observe(this, Observer {
             checkOTPByUser(it)
         })
+
+        checkCodeViewModel.mutableIsValidOTPFromUI.observe(this, Observer {
+            checkIsValidOTPFromUI(it)
+        })
     }
 
     private fun checkIsValidOTP(validOtp: Boolean) {
         if (validOtp) {
-            informUserPhoneNumberVerifiedAutomatically()
+            informUserPhoneNumberVerified(getString(R.string.txt_phone_number_automatically_verified))
             openGuardianActivity()
-        }else{
-            binding.tvWrongCode.isVisible = !validOtp
         }
     }
 
-    private fun informUserPhoneNumberVerifiedAutomatically() {
+    private fun informUserPhoneNumberVerified(text:String) {
         val view = LayoutInflater.from(this).inflate(R.layout.custom_toast, customToast)
         val toast = Toast(this)
         toast.view = view
+        val toastText = view.findViewById<AppCompatTextView>(R.id.tv_toast)
+        toastText.text = text
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.duration = Toast.LENGTH_LONG
         toast.show()
@@ -98,5 +103,14 @@ class CheckCodeActivity : AppCompatActivity() {
             fifthDigit,
             sixthDigit
         )
+    }
+
+    private fun checkIsValidOTPFromUI(validOtp: Boolean) {
+        if (validOtp) {
+            informUserPhoneNumberVerified(getString(R.string.txt_phone_number_verified))
+            openGuardianActivity()
+        }else{
+            binding.tvWrongCode.isVisible = !validOtp
+        }
     }
 }

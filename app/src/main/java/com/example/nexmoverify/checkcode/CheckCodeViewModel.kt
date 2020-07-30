@@ -36,6 +36,8 @@ class CheckCodeViewModel(
     private val digitsAreIntroduced = ObservableBoolean()
     private var notEmpty = false
 
+    val mutableIsValidOTPFromUI = SingleLiveData<Boolean>()
+
     private val callback = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             sender?.let {
@@ -139,7 +141,7 @@ class CheckCodeViewModel(
                                 Logger.e(KOIN_TAG, "onResponse failure successful!")
                                 val checkResponse = response.body()
                                 checkResponse?.let {
-                                    mutableIsValidOTP.value = it.isValidOtp
+                                    mutableIsValidOTPFromUI.value = it.isValidOtp
                                 }
                             }
                         }

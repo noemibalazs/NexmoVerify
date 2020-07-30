@@ -13,4 +13,5 @@
     <string name="txt_user_phone_number">+%s</string>
     <string name="txt_phone_number_automatically_verified">Phone number automatically verified</string>
     <string name="txt_number_six_digit_code">%s%s%s%s%s%s</string>
+    <string name="txt_phone_number_verified">Phone number verified!</string>
 </resources>
