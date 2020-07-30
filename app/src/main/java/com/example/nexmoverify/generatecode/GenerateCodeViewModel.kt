@@ -2,6 +2,7 @@ package com.example.nexmoverify.generatecode
 
 import android.content.Context
 import android.telephony.TelephonyManager
+import android.util.Log
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -165,6 +166,7 @@ class GenerateCodeViewModel(
                                 val textBeltVerifyResponse = response.body()
                                 textBeltVerifyResponse?.let {
                                     generateCodeSuccessListener.value = it.success
+                                    Log.d(KOIN_TAG, "quota remaining: ${textBeltVerifyResponse.quotaRemaining}")
                                     if (it.success && it.otp.length == 6)
                                         dataManager.saveOTP(it.otp)
                                 }

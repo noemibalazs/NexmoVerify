@@ -11,7 +11,6 @@ import retrofit2.http.*
 
 interface TextBeltApiClient {
 
-    @FormUrlEncoded
     @POST("generate")
     fun generateOTP(@Body body: TextBeltVerifyBody): Call<TextBeltVerifyResponse>
 
