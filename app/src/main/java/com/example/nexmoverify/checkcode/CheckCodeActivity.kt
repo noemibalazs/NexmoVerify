@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.nexmoverify.R
@@ -42,12 +43,18 @@ class CheckCodeActivity : AppCompatActivity() {
         checkCodeViewModel.mutableIsValidOTP.observe(this, Observer {
             checkIsValidOTP(it)
         })
+
+        checkCodeViewModel.allDigitsAreIntroduced.observe(this, Observer {
+            checkOTPByUser(it)
+        })
     }
 
     private fun checkIsValidOTP(validOtp: Boolean) {
         if (validOtp) {
             informUserPhoneNumberVerifiedAutomatically()
             openGuardianActivity()
+        }else{
+            binding.tvWrongCode.isVisible = !validOtp
         }
     }
 
@@ -65,5 +72,31 @@ class CheckCodeActivity : AppCompatActivity() {
             openActivity(GuardianActivity::class.java)
             finish()
         }, 1200L)
+    }
+
+    private fun checkOTPByUser(digitsAreIntroduced: Boolean) {
+        if (digitsAreIntroduced) {
+            checkCodeViewModel.verifyUserCode(readOTPFromUI())
+        } else {
+            binding.tvWrongCode.isVisible = !digitsAreIntroduced
+        }
+    }
+
+    private fun readOTPFromUI(): String {
+        val firstDigit = binding.etFirstDigit.text.toString()
+        val secondDigit = binding.etSecondDigit.text.toString()
+        val thirdDigit = binding.etThirdDigit.text.toString()
+        val forthDigit = binding.etForthDigit.text.toString()
+        val fifthDigit = binding.etFifthDigit.text.toString()
+        val sixthDigit = binding.etSixthDigit.text.toString()
+        return getString(
+            R.string.txt_number_six_digit_code,
+            firstDigit,
+            secondDigit,
+            thirdDigit,
+            forthDigit,
+            fifthDigit,
+            sixthDigit
+        )
     }
 }

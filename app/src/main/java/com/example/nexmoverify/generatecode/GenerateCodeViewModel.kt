@@ -3,6 +3,7 @@ package com.example.nexmoverify.generatecode
 import android.content.Context
 import android.telephony.TelephonyManager
 import androidx.databinding.Observable
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +42,7 @@ class GenerateCodeViewModel(
     private val mutablePrefix = ObservableField<String>()
     val errorVerifyNumber = SingleLiveData<Boolean>()
 
-    val isValidPhoneNumber = ObservableField<Boolean>()
+    val isValidPhoneNumber = ObservableBoolean()
     private var isValid = false
 
     val generateCodeSuccessListener = SingleLiveData<Boolean>()
@@ -101,7 +102,7 @@ class GenerateCodeViewModel(
 
     fun onVerifyPhoneNumberClicked() {
         Logger.d(KOIN_TAG, "onVerifyPhoneNumberClicked")
-        if (isValidPhoneNumber.get() == true) {
+        if (isValidPhoneNumber.get()) {
             onVerifyPhoneNumberClicked.call()
             errorVerifyNumber.value = false
         } else
