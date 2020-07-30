@@ -76,7 +76,7 @@ class CheckCodeActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             openActivity(GuardianActivity::class.java)
             finish()
-        }, 1200L)
+        }, 2100L)
     }
 
     private fun checkOTPByUser(digitsAreIntroduced: Boolean) {
